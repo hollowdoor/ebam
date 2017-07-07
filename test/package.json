@@ -1,0 +1,17 @@
+{
+  "name": "a-thingy",
+  "ebam": {
+    "entry": "index.js",
+    "test": {
+      "src": "test/src.js",
+      "dest": "test/code.js"
+    },
+    "transforms": {
+      "dangerousForOf": true,
+      "dangerousTaggedTemplateString": true
+    }
+  },
+  "main": "dist/bundle.js",
+  "jsnext:main": "dist/bundle.es.js",
+  "module": "dist/bundle.es.js"
+}
