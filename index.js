@@ -10,6 +10,10 @@ const camelcase = require('camelcase');
 const pkgConf = require('pkg-conf');
 const processPackage = require('./lib/process_package.js');
 const hasTest = require('./lib/has_test');
+const getTime = require('./lib/get_time');
+const log = console.log;
+
+console.log(getTime());
 
 const cli = meow(`
     Usage
@@ -41,17 +45,22 @@ function main(config){
         plugins: getPlugins({transforms: config.transforms}),
         external: config.external
     }).then((bundle)=>{
-        bundle.write({
+
+        let a = bundle.write({
             dest: 'dist/bundle.js',
             format: 'cjs',
             moduleName: config.name,
             sourceMap: true
         });
 
-        bundle.write({
+        let b = bundle.write({
             dest: 'dist/bundle.es.js',
             format: 'es',
             sourceMap: true
+        });
+        return Promise.all([a, b]).then(()=>{
+            log(`Generated dist/bundle.js`);
+            log(`Generated dist/bundle.es.js`);
         });
     }).catch(onErrorCB('bundle'));
 
@@ -65,7 +74,7 @@ function main(config){
             format: 'iife',
             sourceMap: true,
             moduleName: camelcase(config.name)
-        });
+        }).then(()=>log(`Generated dist/${config.name}.js`));
     }).catch(onErrorCB('script sources'));
 
     rollup.rollup({
@@ -77,7 +86,7 @@ function main(config){
             format: 'iife',
             sourceMap: true,
             moduleName: camelcase(config.name)
-        });
+        }).then(()=>log(`Generated dist/${config.name}.min.js`));
     }).catch(onErrorCB('script sources'));
 
     if(hasTest(config)){
@@ -90,7 +99,7 @@ function main(config){
                 format: 'iife',
                 sourceMap: true,
                 moduleName: camelcase(config.name)
-            });
+            }).then(()=>log(`Generated ${config.test.dest}`));
         }).catch(onErrorCB('test code'));
     }
 
