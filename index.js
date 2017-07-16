@@ -40,7 +40,7 @@ pkgConf('ebam').then(config=>{
 
 function main(config){
 
-    rollup.rollup({
+    let a = rollup.rollup({
         entry: config.entry,
         plugins: getPlugins({transforms: config.transforms}),
         external: config.external
@@ -65,7 +65,7 @@ function main(config){
     }).catch(onErrorCB('bundle'));
 
     //Browser ready builds
-    rollup.rollup({
+    let b = rollup.rollup({
         entry: config.entry,
         plugins: getPlugins([], config),
     }).then((bundle)=>{
@@ -77,7 +77,7 @@ function main(config){
         }).then(()=>log(`Generated dist/${config.name}.js`));
     }).catch(onErrorCB('script sources'));
 
-    rollup.rollup({
+    let c = rollup.rollup({
         entry: config.entry,
         plugins: getPlugins([uglify()], config),
     }).then((bundle)=>{
@@ -89,19 +89,22 @@ function main(config){
         }).then(()=>log(`Generated dist/${config.name}.min.js`));
     }).catch(onErrorCB('script sources'));
 
-    if(hasTest(config)){
-        rollup.rollup({
-            entry: config.test.src,
-            plugins: getPlugins([], config)
-        }).then(bundle=>{
-            bundle.write({
-                dest: config.test.dest,
-                format: 'iife',
-                sourceMap: true,
-                moduleName: camelcase(config.name)
-            }).then(()=>log(`Generated ${config.test.dest}`));
-        }).catch(onErrorCB('test code'));
-    }
+    Promise.all([a, b, c]).then(v=>{
+        if(hasTest(config)){
+            rollup.rollup({
+                entry: config.test.src,
+                plugins: getPlugins([], config)
+            }).then(bundle=>{
+                bundle.write({
+                    dest: config.test.dest,
+                    format: 'iife',
+                    sourceMap: true,
+                    moduleName: camelcase(config.name)
+                }).then(()=>log(`Generated ${config.test.dest}`));
+            }).catch(onErrorCB('test code'));
+        }
+    });
+
 
     function getPlugins(extraPlugins = [], {
         ignore = [],
