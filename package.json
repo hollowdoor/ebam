@@ -8,7 +8,7 @@
   },
   "scripts": {
     "retest": "npm install -g",
-    "simple-test": "cd test && ebam",
+    "simple-test": "cd test && node ../",
     "test": "npm run simple-test"
   },
   "keywords": [

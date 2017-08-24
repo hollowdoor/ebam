@@ -90,6 +90,7 @@ function main(config){
     }).catch(onErrorCB('script sources'));
 
     Promise.all([a, b, c]).then(v=>{
+        
         if(hasTest(config)){
             rollup.rollup({
                 entry: config.test.src,
