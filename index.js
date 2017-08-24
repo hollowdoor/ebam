@@ -90,7 +90,7 @@ function main(config){
     }).catch(onErrorCB('script sources'));
 
     Promise.all([a, b, c]).then(v=>{
-        
+
         if(hasTest(config)){
             rollup.rollup({
                 entry: config.test.src,
@@ -126,14 +126,10 @@ function main(config){
         ].concat(extraPlugins);
     }
 
-    function onErrorCB(message){
+    function onErrorCB(message = ''){
         return function(e){
             if(e){
-                if(message)
-                    console.log(message);
-                throw new Error('ebam error '+e);
-                //console.log(e);
-                //console.log(e.stack);
+                throw new Error('ebam error for '+message+' -->\n'+e.message);
             }
         };
     }
