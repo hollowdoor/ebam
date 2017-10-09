@@ -9,6 +9,8 @@ Install
 Usage
 ----
 
+Use [the official yeoman generator](https://github.com/hollowdoor/generator_ebam) for `ebam`, or:
+
 Change directory to where you are authoring your module.
 
 Then run `ebam` on the command line.
