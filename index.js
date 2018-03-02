@@ -41,22 +41,22 @@ pkgConf('ebam').then(config=>{
 function main(config){
 
     let a = rollup.rollup({
-        entry: config.entry,
+        input: config.entry,
         plugins: getPlugins({transforms: config.transforms}),
         external: config.external
     }).then((bundle)=>{
 
         let a = bundle.write({
-            dest: 'dist/bundle.js',
+            file: 'dist/bundle.js',
             format: 'cjs',
-            moduleName: config.name,
-            sourceMap: true
+            name: config.name,
+            sourcemap: true
         });
 
         let b = bundle.write({
-            dest: 'dist/bundle.es.js',
+            file: 'dist/bundle.es.js',
             format: 'es',
-            sourceMap: true
+            sourcemap: true
         });
         return Promise.all([a, b]).then(()=>{
             log(`Generated dist/bundle.js`);
@@ -66,26 +66,26 @@ function main(config){
 
     //Browser ready builds
     let b = rollup.rollup({
-        entry: config.entry,
+        input: config.entry,
         plugins: getPlugins([], config),
     }).then((bundle)=>{
         return bundle.write({
-            dest: `dist/${config.name}.js`,
+            file: `dist/${config.name}.js`,
             format: 'iife',
-            sourceMap: true,
-            moduleName: camelcase(config.name)
+            sourcemap: true,
+            name: camelcase(config.name)
         }).then(()=>log(`Generated dist/${config.name}.js`));
     }).catch(onErrorCB('script sources'));
 
     let c = rollup.rollup({
-        entry: config.entry,
+        input: config.entry,
         plugins: getPlugins([uglify()], config),
     }).then((bundle)=>{
         return bundle.write({
-            dest: `dist/${config.name}.min.js`,
+            file: `dist/${config.name}.min.js`,
             format: 'iife',
-            sourceMap: true,
-            moduleName: camelcase(config.name)
+            sourcemap: true,
+            name: camelcase(config.name)
         }).then(()=>log(`Generated dist/${config.name}.min.js`));
     }).catch(onErrorCB('script sources'));
 
@@ -93,14 +93,14 @@ function main(config){
 
         if(hasTest(config)){
             rollup.rollup({
-                entry: config.test.src,
+                input: config.test.src,
                 plugins: getPlugins([], config)
             }).then(bundle=>{
                 bundle.write({
-                    dest: config.test.dest,
+                    file: config.test.dest,
                     format: 'iife',
-                    sourceMap: true,
-                    moduleName: camelcase(config.name)
+                    sourcemap: true,
+                    name: camelcase(config.name)
                 }).then(()=>log(`Generated ${config.test.dest}`));
             }).catch(onErrorCB('test code'));
         }
