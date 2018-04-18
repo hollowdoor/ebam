@@ -3,15 +3,29 @@
   "ebam": {
     "entry": "index.js",
     "test": {
-      "src": "test/src.js",
-      "dest": "test/code.js"
+      "dest": "test/code.js",
+      "src": "test/src.js"
     },
     "transforms": {
-      "dangerousForOf": true,
-      "dangerousTaggedTemplateString": true
-    }
+      "dangerousForOf": false,
+      "dangerousTaggedTemplateString": false
+    },
+    "input": "index.js",
+    "esmain": false
   },
   "main": "dist/bundle.js",
   "jsnext:main": "dist/bundle.es.js",
-  "module": "dist/bundle.es.js"
+  "module": "dist/bundle.es.js",
+  "scripts": {
+    "build": "ebam",
+    "test": "echo \"no test\""
+  },
+  "description": "It's a thingy",
+  "keywords": [
+    "one",
+    "things",
+    "other"
+  ],
+  "version": "1.0.0",
+  "license": "MIT"
 }

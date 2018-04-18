@@ -17,7 +17,7 @@ const cli = meow(`
 });
 
 (function main(){
-    
+
     if(cli.input[0] === 'init'){
         init();
         return;
@@ -27,7 +27,7 @@ const cli = meow(`
 
     pkgConf('ebam').then(config=>{
 
-        return processPackage()
+        return processPackage(config)
         .then(pack=>{
             config.name = pack.name;
             config.external = Object.keys(pack.dependencies || {});

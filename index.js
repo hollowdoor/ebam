@@ -10,13 +10,24 @@ const log = console.log.bind(console);
 
 module.exports = function main(config){
 
-    let input = config.entry || config.input;
+    let input = config.input || config.entry;
+    let esmain = !!config.esmain;
 
     let a = rollup.rollup({
         input,
         plugins: getPlugins({transforms: config.transforms}),
         external: config.external
     }).then((bundle)=>{
+
+        if(esmain){
+            return bundle.write({
+                file: 'dist/bundle.mjs',
+                format: 'es',
+                sourcemap: true
+            }).then(()=>{
+                log(`Generated dist/bundle.mjs`);
+            });
+        }
 
         let a = bundle.write({
             file: 'dist/bundle.js',
