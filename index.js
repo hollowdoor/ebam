@@ -1,47 +1,19 @@
-#!/usr/bin/env node
 "use strict";
 const buble = require('rollup-plugin-buble');
 const rollup = require('rollup');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const commonjs = require('rollup-plugin-commonjs');
 const uglify = require('rollup-plugin-uglify');
-const meow = require('meow');
 const camelcase = require('camelcase');
-const pkgConf = require('pkg-conf');
-const processPackage = require('./lib/process_package.js');
 const hasTest = require('./lib/has_test');
-const getTime = require('./lib/get_time');
 const log = console.log;
 
-console.log(getTime());
+module.exports = function main(config){
 
-const cli = meow(`
-    Usage
-        $ ebam <input>
-`, {
-    alias: {
-
-    }
-});
-
-pkgConf('ebam').then(config=>{
-
-    processPackage()
-    .then(pack=>{
-        config.name = pack.name;
-        config.external = Object.keys(pack.dependencies || {});
-        config.transforms = config.transforms || {};
-        return main(config);
-    })
-    .catch(err=>{
-        throw new Error('ebam error ' + err.message);
-    });
-});
-
-function main(config){
+    let input = config.entry || config.input;
 
     let a = rollup.rollup({
-        input: config.entry,
+        input,
         plugins: getPlugins({transforms: config.transforms}),
         external: config.external
     }).then((bundle)=>{
@@ -66,7 +38,7 @@ function main(config){
 
     //Browser ready builds
     let b = rollup.rollup({
-        input: config.entry,
+        input,
         plugins: getPlugins([], config),
     }).then((bundle)=>{
         return bundle.write({
@@ -78,7 +50,7 @@ function main(config){
     }).catch(onErrorCB('script sources'));
 
     let c = rollup.rollup({
-        input: config.entry,
+        input,
         plugins: getPlugins([uglify()], config),
     }).then((bundle)=>{
         return bundle.write({

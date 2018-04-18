@@ -4,11 +4,11 @@
   "description": "Easily build a module",
   "main": "index.js",
   "bin": {
-    "ebam": "index.js"
+    "ebam": "cmd.js"
   },
   "scripts": {
     "retest": "npm install -g",
-    "simple-test": "cd test && node ../",
+    "simple-test": "cd test && node ../cmd.js",
     "test": "npm run simple-test"
   },
   "keywords": [
