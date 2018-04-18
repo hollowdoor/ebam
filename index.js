@@ -6,7 +6,7 @@ const commonjs = require('rollup-plugin-commonjs');
 const uglify = require('rollup-plugin-uglify');
 const camelcase = require('camelcase');
 const hasTest = require('./lib/has_test');
-const log = console.log;
+const log = console.log.bind(console);
 
 module.exports = function main(config){
 
