@@ -26,6 +26,28 @@ Additional source maps are also generated for each file.
 
 `dist/{moduleName}.js`, and `dist/{moduleName}.min.js` are browser ready downloadable builds.
 
+### The programmable interface
+
+Install locally using `npm install ebam`.
+
+Create a build file in your project's directory:
+
+```javascript
+const ebam = require('ebam');
+//Build your project
+ebam({
+    "input": "index.js",
+    "test": {
+      "src": "test/src.js",
+      "dest": "test/code.js"
+    },
+    "transforms": {
+      "dangerousForOf": false,
+      "dangerousTaggedTemplateString": false
+    }
+}).then(v=>console.log('All done!'));
+```
+
 About
 ----
 
@@ -44,7 +66,7 @@ Here is a `package.json` with an `ebam` configuration field.
 {
   "name": "a-thingy",
   "ebam": {
-    "entry": "index.js",
+    "input": "index.js",
     "test": {
       "src": "test/src.js",
       "dest": "test/code.js"
