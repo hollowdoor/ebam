@@ -7,6 +7,7 @@ const uglify = require('rollup-plugin-uglify');
 const camelcase = require('camelcase');
 const hasTest = require('./lib/has_test');
 const cliInit = require('./lib/cli_init.js');
+const initPackage = require('./lib/init_package.js');
 const log = console.log.bind(console);
 
 module.exports = function main(config){
@@ -110,3 +111,4 @@ module.exports = function main(config){
 }
 
 module.exports.cliInit = cliInit;
+module.exports.initPackage = initPackage;

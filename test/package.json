@@ -11,7 +11,9 @@
       "dangerousTaggedTemplateString": false
     },
     "input": "index.js",
-    "esmain": false
+    "esmain": false,
+    "name": "a-thingy",
+    "external": []
   },
   "main": "dist/bundle.js",
   "jsnext:main": "dist/bundle.es.js",
