@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 "use strict";
-const getTime = require('./lib/get_time');
 const run = require('./index.js');
 const init = require('./lib/init.js');
 
@@ -13,16 +12,16 @@ const init = require('./lib/init.js');
         return;
     }
 
+    run.showTime();
+
     if(cli.input[0] === 'init'){
-        init();
-        return;
+        return init();
     }
 
-    run.initPackage().then(pack=>{
-        console.log(getTime());
+    return run.initPackage().then(pack=>{
         return run(pack.ebam);
-    })
-    .catch(err=>{
-        throw new Error('ebam error ' + err.message);
     });
-}());
+}())
+.catch(err=>{
+    throw new Error('ebam error ' + err.message);
+});
