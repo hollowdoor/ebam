@@ -9,11 +9,11 @@ Install
 Usage
 ----
 
-Use [the official yeoman generator](https://github.com/hollowdoor/generator_ebam) for `ebam`, or:
-
 Change directory to where you are authoring your module.
 
-Then run `ebam` on the command line.
+Run `ebam init` to automatically create an ebam project with config fields in the package.json file. You should also run `npm init`. You can run `npm init` before, or after `ebam init`. Ideally `ebam init` won't step on any fields created by `npm init`, and vise versa.
+
+Then run `ebam` on the command line to build your project.
 
 `ebam` will create a `dist` folder and these files:
 
@@ -65,10 +65,3 @@ Here is a `package.json` with an `ebam` configuration field.
 The `ebam.transforms` field is just like the transforms options that `buble` accepts. See the `buble` project for more.
 
 The `ebam.test` field is a source (**src**) of a test file, and an output destination (**dest**) for a compiled version. Use the **dest** file to test your module in the browser. This can be used when you aren't using some test automation suit.
-
-Development
---------
-
-For this repo. Clone your fork to you local machine.
-
-Run: `npm install -g && npm run test` **<<-- Warning** this will replace any previous installs of `ebam`.
