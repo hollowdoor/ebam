@@ -6,6 +6,19 @@ Install
 
 `npm install -g ebam`
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+**Contents**
+
+- [Usage](#usage)
+  - [The programmatic interface](#the-programmatic-interface)
+- [Versions](#versions)
+  - [Version 2](#version-2)
+- [About](#about)
+- [The Config](#the-config)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 Usage
 ----
 
@@ -26,7 +39,7 @@ Additional source maps are also generated for each file.
 
 `dist/{moduleName}.js`, and `dist/{moduleName}.min.js` are browser ready downloadable builds.
 
-### The programmable interface
+### The programmatic interface
 
 Install locally using `npm install ebam`.
 
@@ -48,8 +61,23 @@ ebam({
 }).then(v=>console.log('All done!'));
 ```
 
+Versions
+----
+
+There are no notes for version 1.
+
+### Version 2
+
+Version 1 uses an `ebam.input` field instead of `ebam.entry`. Old configuration should still work.
+
+Version 2 uses the `ebam init` command instead of relying on a yeoman generator. The yeoman generator should still be useful, but it's use is being phase out.
+
+The code base is somewhat cleaner for ebam under version 2.
+
 About
 ----
+
+
 
 `ebam` is a wrapper around `rollup` that compiles your es2015 module into something consumable by browsers using the `rollup-plugin-buble` module.
 
