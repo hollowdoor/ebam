@@ -58,7 +58,22 @@ ebam({
       "dangerousForOf": false,
       "dangerousTaggedTemplateString": false
     }
-}).then(v=>console.log('All done!'));
+})
+.then(v=>console.log('All done!'))
+.catch(e=>console.error(e));
+```
+
+You can also get the package config automatically.
+
+```javascript
+const ebam = require('ebam');
+//Build your project
+ebam.initPackage().then(pack=>{
+    //pack is the package.json object
+    return ebam(pack.ebam);
+})
+.then(v=>console.log('All done!'))
+.catch(e=>console.error(e));
 ```
 
 Versions
